@@ -71,17 +71,26 @@ export default function HomePage() {
             Download individually or install the full collection.
           </p>
 
-          {/* Install command */}
-          <div
+          {/* Install commands */}
+          {/* <div
             className={cn(
-              "mx-auto mt-8 flex max-w-xl items-center gap-3 rounded-xl",
+              "mx-auto mt-8 flex max-w-xl flex-col gap-3 rounded-xl",
               "border border-border bg-card p-4"
             )}
           >
-            <code className="flex-1 font-mono text-sm text-foreground">
-              /plugin install secret-ingredients@secret-ingredients-marketplace
-            </code>
-          </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-muted-foreground">1.</span>
+              <code className="flex-1 font-mono text-sm text-foreground">
+                /plugin marketplace add infiniV/secret-ingredients
+              </code>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-muted-foreground">2.</span>
+              <code className="flex-1 font-mono text-sm text-foreground">
+                /plugin install secret-ingredients@secret-ingredients-marketplace
+              </code>
+            </div>
+          </div> */}
         </header>
 
         {/* Skills Grid */}

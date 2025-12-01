@@ -106,12 +106,21 @@ export default async function SkillPage({ params }: PageProps) {
         <section className="mb-12 space-y-4">
           <h2 className="text-lg font-semibold text-foreground">Install</h2>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+          <div className="space-y-4">
+            <div className="space-y-3">
               <p className="text-sm text-muted-foreground">
-                Via Claude Code plugin:
+                Via Claude Code plugin (two steps):
               </p>
-              <CopyCommand command="/plugin install secret-ingredients@secret-ingredients-marketplace" />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-muted-foreground">1.</span>
+                  <CopyCommand command="/plugin marketplace add infiniV/secret-ingredients" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-muted-foreground">2.</span>
+                  <CopyCommand command="/plugin install secret-ingredients@secret-ingredients-marketplace" />
+                </div>
+              </div>
             </div>
 
             <div className="space-y-2">

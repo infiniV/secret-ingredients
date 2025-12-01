@@ -6,7 +6,11 @@ Specialized skills for Claude Code focused on UI planning, theming, and code qua
 
 Install the full skill collection in Claude Code:
 
-```
+```bash
+# Step 1: Add the marketplace
+/plugin marketplace add infiniV/secret-ingredients
+
+# Step 2: Install the plugin
 /plugin install secret-ingredients@secret-ingredients-marketplace
 ```
 
