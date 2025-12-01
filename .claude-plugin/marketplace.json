@@ -9,7 +9,10 @@
       "name": "secret-ingredients",
       "description": "Specialized Claude Code skills for UI, theming, and code quality",
       "version": "1.0.0",
-      "source": "./"
+      "source": {
+        "source": "url",
+        "url": "https://github.com/infiniV/secret-ingredients.git"
+      }
     }
   ]
 }
