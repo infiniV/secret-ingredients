@@ -33,13 +33,22 @@ className="bg-primary text-primary-foreground hover:bg-primary/90"
 className="text-success bg-destructive/10"
 ```
 
+
+**FORBIDDEN - Hardcoded Hex Values:**
+```tsx
+// WRONG - magic numbers/colors
+className="bg-[#F3F4F6] text-[#111827]"
+style={{ backgroundColor: '#ff0000' }}
+```
+
 **Verification:**
 ```bash
 # Find violations - any match is a failure
 grep -rn "bg-gray\|bg-blue\|bg-green\|bg-red\|text-gray\|text-blue" --include="*.tsx"
+grep -rn "#[0-9a-fA-F]\{3,6\}" --include="*.tsx"  # Catch hex codes
 ```
 
-If a semantic color doesn't exist, ADD IT to the theme system - don't use raw Tailwind colors.
+If a semantic color doesn't exist, ADD IT to the theme system - don't use raw Tailwind colors or Hex values.
 
 ### 2. Typography Standards (16px Minimum Body Text)
 
@@ -259,9 +268,9 @@ className="animate-spin"   // spinner
 
 **Don't overdo it:** Subtle > flashy. Respect `prefers-reduced-motion`.
 
-### 9. CSS Quality (No Hallucinated Properties)
+### 9. Code Validity (No Hallucinations)
 
-AI sometimes generates non-existent or obsolete CSS. Validate:
+AI sometimes generates non-existent CSS properties or imports libraries/components that aren't installed.
 
 **FORBIDDEN - Hallucinated/obsolete CSS:**
 ```css
@@ -273,13 +282,38 @@ text-fill-color: transparent;
 -webkit-border-radius: 8px;  /* Just use border-radius */
 ```
 
-**If unsure about a CSS property:** Check MDN. If it's not there, don't use it.
+**FORBIDDEN - Hallucinated Imports:**
+```tsx
+// WRONG - Do not import things that don't exist
+import { Sparkles } from '@heroicons/react/solid'; // Check if 'solid' exists in your version
+import { useMagicHook } from 'react-use'; // Check if 'react-use' is installed
+```
+
+**Rule:**
+1. **Check `package.json`** before importing a 3rd party library.
+2. **Check file structure** before importing local components (don't assume `@/components/ui/card` exists).
+3. **Check MDN** if unsure about a CSS property.
+
+### 10. Project Structure (Anti-Monolith)
+
+AI tends to dump everything into a single file. This is unmaintainable.
+
+**FORBIDDEN - The "God Component":**
+- Single file > 250 lines (unless it's a complex data table).
+- Defining multiple complex sub-components in the same file.
+- Mixing heavy business logic (`useEffect`, data fetching) with UI rendering.
+
+**REQUIRED - Separation of Concerns:**
+1. **Extract Types:** Move interfaces to `types.ts` if shared, or top of file.
+2. **Extract Hooks:** Move complex logic to `useFeatureName.ts`.
+3. **Extract Components:** If a sub-component renders > 20 lines of JSX, move it to its own file.
+4. **Colocation:** Keep related files together (e.g., `components/Feature/Feature.tsx`, `components/Feature/useFeature.ts`).
 
 ## Verification Checklist
 
 Before marking any UI work complete, verify:
 
-- [ ] Zero hardcoded Tailwind colors (grep check passes)
+- [ ] Zero hardcoded Tailwind colors OR Hex codes (grep check passes)
 - [ ] Body text uses `text-base` (16px) or larger
 - [ ] Semantic HTML elements for all landmarks
 - [ ] All interactive elements have accessible names
@@ -292,7 +326,8 @@ Before marking any UI work complete, verify:
 - [ ] `aria-expanded` on all toggle buttons
 - [ ] All images have alt text (empty for decorative)
 - [ ] Hover/transition states on interactive elements
-- [ ] No hallucinated CSS properties (check MDN if unsure)
+- [ ] No hallucinated CSS properties or Imports (verify existence)
+- [ ] No "God Components" (>250 lines) - extracted sub-components
 
 ## Common Rationalizations
 
@@ -319,7 +354,9 @@ Before marking any UI work complete, verify:
 
 If you catch yourself doing ANY of these, STOP:
 
-- Using `bg-gray-*`, `text-gray-*`, `bg-blue-*` anywhere
+- Using `bg-gray-*`, `text-gray-*`, or Hex codes (`#F3F4F6`)
+- Importing libraries without checking `package.json`
+- Creating "God Components" (>250 lines) without splitting
 - Body text smaller than 16px (`text-sm` for paragraphs)
 - Interactive elements without accessible names
 - No loading or error state handling
