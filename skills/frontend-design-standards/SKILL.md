@@ -1,8 +1,6 @@
 ---
 name: frontend-design-standards
 description: Use when generating React/TypeScript UI components, forms, layouts, or pages - prevents generic AI aesthetic, enforces accessibility, semantic HTML, theme compliance, minimum text sizes, proper states, and brand differentiation
-category: frontend
-icon: layout-template
 ---
 
 # Frontend Design Standards

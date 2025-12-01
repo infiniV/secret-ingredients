@@ -1,8 +1,6 @@
 ---
 name: theme-checker
 description: Analyzes codebase for theme consistency, checking CSS variables, color usage, and design token adherence across components
-category: code-quality
-icon: palette
 ---
 
 # Theme Checker

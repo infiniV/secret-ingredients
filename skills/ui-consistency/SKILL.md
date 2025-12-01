@@ -1,8 +1,6 @@
 ---
 name: ui-consistency
 description: Use when auditing or fixing UI consistency issues like mismatched spacing, hardcoded colors, theme violations, or elements that look off - provides systematic checklist for theme, spacing, typography audits and proper techniques for canvas/SVG theming with reactivity
-category: code-quality
-icon: layout-grid
 ---
 
 # UI Consistency
