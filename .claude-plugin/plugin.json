@@ -8,6 +8,5 @@
   "homepage": "https://github.com/infiniV/secret-ingredients",
   "repository": "https://github.com/infiniV/secret-ingredients",
   "license": "MIT",
-  "keywords": ["skills", "ui", "theming", "code-quality"],
-  "skills": "./skills"
+  "keywords": ["skills", "ui", "theming", "code-quality"]
 }
