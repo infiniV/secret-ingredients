@@ -1,5 +1,6 @@
 import { getAllSkills } from "@/lib/skills";
 import { SkillCard } from "@/components/SkillCard";
+import { GridPattern } from "@/components/GridPattern";
 import { Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +9,8 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-screen bg-background">
+      <GridPattern className="opacity-50" />
+
       {/* Decorative background elements */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
