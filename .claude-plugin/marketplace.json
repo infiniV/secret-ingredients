@@ -9,7 +9,12 @@
       "name": "secret-ingredients",
       "description": "Specialized Claude Code skills for UI, theming, and code quality",
       "version": "1.0.0",
-      "source": "./"
+      "source": "./",
+      "skills": [
+        "./skills/theme-checker",
+        "./skills/ui-consistency",
+        "./skills/frontend-design-standards"
+      ]
     }
   ]
 }
