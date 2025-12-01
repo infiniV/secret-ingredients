@@ -27,17 +27,20 @@ export function CopyCommand({ command }: CopyCommandProps) {
       <code className="flex-1 font-mono text-sm text-foreground">{command}</code>
       <button
         onClick={handleCopy}
+        aria-label={copied ? "Copied to clipboard" : "Copy command to clipboard"}
         className={cn(
           "inline-flex items-center justify-center rounded-md p-2",
           "text-muted-foreground transition-colors",
-          "hover:bg-accent hover:text-accent-foreground"
+          "hover:bg-accent hover:text-accent-foreground",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         )}
       >
         {copied ? (
-          <Check className="h-4 w-4 text-chart-2" />
+          <Check className="h-4 w-4 text-chart-2" aria-hidden="true" />
         ) : (
-          <Copy className="h-4 w-4" />
+          <Copy className="h-4 w-4" aria-hidden="true" />
         )}
+        <span className="sr-only">{copied ? "Copied" : "Copy"}</span>
       </button>
     </div>
   );

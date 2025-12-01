@@ -58,18 +58,21 @@ export default async function SkillPage({ params }: PageProps) {
         />
       </div>
 
-      <main className="relative mx-auto max-w-4xl px-6 py-16">
+      <main id="main-content" className="relative mx-auto max-w-4xl px-6 py-16">
         {/* Back link */}
-        <Link
-          href="/"
-          className={cn(
-            "mb-8 inline-flex items-center gap-2 text-sm font-medium",
-            "text-muted-foreground transition-colors hover:text-foreground"
-          )}
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to all skills
-        </Link>
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <Link
+            href="/"
+            className={cn(
+              "inline-flex items-center gap-2 text-sm font-medium",
+              "text-muted-foreground transition-colors hover:text-foreground",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:rounded-md"
+            )}
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to all skills
+          </Link>
+        </nav>
 
         {/* Header */}
         <header className="mb-12">
@@ -103,8 +106,8 @@ export default async function SkillPage({ params }: PageProps) {
         </header>
 
         {/* Actions */}
-        <section className="mb-12 space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Install</h2>
+        <section aria-labelledby="install-heading" className="mb-12 space-y-4">
+          <h2 id="install-heading" className="text-lg font-semibold text-foreground">Install</h2>
 
           <div className="space-y-4">
             <div className="space-y-3">
@@ -133,8 +136,8 @@ export default async function SkillPage({ params }: PageProps) {
         </section>
 
         {/* Files included */}
-        <section className="mb-12">
-          <h2 className="mb-4 text-lg font-semibold text-foreground">
+        <section aria-labelledby="files-heading" className="mb-12">
+          <h2 id="files-heading" className="mb-4 text-lg font-semibold text-foreground">
             Files Included
           </h2>
           <div className="rounded-xl border border-border bg-card p-4">
@@ -150,8 +153,8 @@ export default async function SkillPage({ params }: PageProps) {
         </section>
 
         {/* Content */}
-        <section>
-          <h2 className="mb-4 text-lg font-semibold text-foreground">
+        <section aria-labelledby="docs-heading">
+          <h2 id="docs-heading" className="mb-4 text-lg font-semibold text-foreground">
             Skill Documentation
           </h2>
           <div

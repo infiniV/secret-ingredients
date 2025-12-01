@@ -71,6 +71,13 @@
 :root {
   --radius: 0.5rem;
   --background: oklch(0.9818 0.0054 95.0986);
+  /* RGB values for canvas (canvas API cannot parse CSS var() syntax) */
+  --chart-1-rgb: 180, 100, 60;
+  --chart-2-rgb: 140, 100, 180;
+  --chart-3-rgb: 220, 200, 170;
+  --chart-4-rgb: 180, 160, 200;
+  --chart-5-rgb: 170, 90, 50;
+  --background-rgb: 250, 248, 244;
   --foreground: oklch(0.3438 0.0269 95.7226);
   --card: oklch(0.9818 0.0054 95.0986);
   --card-foreground: oklch(0.1908 0.0020 106.5859);
@@ -126,6 +133,13 @@
 
 .dark {
   --background: oklch(0.2679 0.0036 106.6427);
+  /* RGB values for canvas (canvas API cannot parse CSS var() syntax) */
+  --chart-1-rgb: 200, 120, 80;
+  --chart-2-rgb: 160, 120, 200;
+  --chart-3-rgb: 60, 55, 50;
+  --chart-4-rgb: 80, 70, 120;
+  --chart-5-rgb: 190, 110, 70;
+  --background-rgb: 40, 38, 36;
   --foreground: oklch(0.8074 0.0142 93.0137);
   --card: oklch(0.2679 0.0036 106.6427);
   --card-foreground: oklch(0.9818 0.0054 95.0986);
@@ -186,5 +200,16 @@
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

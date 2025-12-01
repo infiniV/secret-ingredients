@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 interface Orb {
@@ -9,7 +9,7 @@ interface Orb {
   vx: number;
   vy: number;
   radius: number;
-  color: string;
+  colorIndex: number;
 }
 
 interface FloatingOrbsProps {
@@ -17,10 +17,29 @@ interface FloatingOrbsProps {
   orbCount?: number;
 }
 
+function getCanvasColor(variable: string, alpha: number): string {
+  const rgb = getComputedStyle(document.documentElement)
+    .getPropertyValue(variable)
+    .trim();
+  return `rgba(${rgb}, ${alpha})`;
+}
+
 export function FloatingOrbs({ className, orbCount = 5 }: FloatingOrbsProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const orbsRef = useRef<Orb[]>([]);
   const animationRef = useRef<number>(0);
+  const colorsRef = useRef<{ variable: string; alpha: number }[]>([
+    { variable: "--chart-1-rgb", alpha: 0.15 },
+    { variable: "--chart-2-rgb", alpha: 0.12 },
+    { variable: "--chart-3-rgb", alpha: 0.1 },
+    { variable: "--chart-4-rgb", alpha: 0.1 },
+    { variable: "--chart-5-rgb", alpha: 0.12 },
+  ]);
+
+  const getOrbColor = useCallback((colorIndex: number): string => {
+    const colorDef = colorsRef.current[colorIndex];
+    return getCanvasColor(colorDef.variable, colorDef.alpha);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -39,16 +58,7 @@ export function FloatingOrbs({ className, orbCount = 5 }: FloatingOrbsProps) {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Theme-aligned colors (warm oranges, purples, creams)
-    const colors = [
-      "rgba(180, 100, 60, 0.15)",   // chart-1 warm orange
-      "rgba(140, 100, 180, 0.12)",  // chart-2 purple
-      "rgba(220, 200, 170, 0.1)",   // chart-3 cream
-      "rgba(180, 160, 200, 0.1)",   // chart-4 lavender
-      "rgba(170, 90, 50, 0.12)",    // chart-5 deep orange
-    ];
-
-    // Initialize orbs
+    // Initialize orbs with color index instead of hardcoded color
     const rect = canvas.getBoundingClientRect();
     orbsRef.current = Array.from({ length: orbCount }, () => ({
       x: Math.random() * rect.width,
@@ -56,7 +66,7 @@ export function FloatingOrbs({ className, orbCount = 5 }: FloatingOrbsProps) {
       vx: (Math.random() - 0.5) * 0.3,
       vy: (Math.random() - 0.5) * 0.3,
       radius: 80 + Math.random() * 120,
-      color: colors[Math.floor(Math.random() * colors.length)],
+      colorIndex: Math.floor(Math.random() * colorsRef.current.length),
     }));
 
     const animate = () => {
@@ -74,6 +84,9 @@ export function FloatingOrbs({ className, orbCount = 5 }: FloatingOrbsProps) {
         if (orb.y < -orb.radius) orb.y = rect.height + orb.radius;
         if (orb.y > rect.height + orb.radius) orb.y = -orb.radius;
 
+        // Get current theme color
+        const color = getOrbColor(orb.colorIndex);
+
         // Draw orb with radial gradient
         const gradient = ctx.createRadialGradient(
           orb.x,
@@ -83,7 +96,7 @@ export function FloatingOrbs({ className, orbCount = 5 }: FloatingOrbsProps) {
           orb.y,
           orb.radius
         );
-        gradient.addColorStop(0, orb.color);
+        gradient.addColorStop(0, color);
         gradient.addColorStop(1, "transparent");
 
         ctx.beginPath();
@@ -97,15 +110,26 @@ export function FloatingOrbs({ className, orbCount = 5 }: FloatingOrbsProps) {
 
     animate();
 
+    // Theme reactivity: redraw when theme changes
+    const observer = new MutationObserver(() => {
+      // Colors are read fresh in animate loop via getOrbColor
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationRef.current);
+      observer.disconnect();
     };
-  }, [orbCount]);
+  }, [orbCount, getOrbColor]);
 
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className={cn(
         "pointer-events-none absolute inset-0 h-full w-full",
         className

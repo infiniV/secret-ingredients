@@ -14,6 +14,7 @@ export function GridPattern({ className, variant = "dots" }: GridPatternProps) {
     <svg
       className={cn("pointer-events-none absolute inset-0 h-full w-full", className)}
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
     >
       <defs>
         {variant === "dots" && (
@@ -60,10 +61,11 @@ export function GridPattern({ className, variant = "dots" }: GridPatternProps) {
           </pattern>
         )}
 
+        {/* Use CSS variable for theme-aware gradient mask */}
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="white" stopOpacity="1" />
-          <stop offset="60%" stopColor="white" stopOpacity="0.6" />
-          <stop offset="100%" stopColor="white" stopOpacity="0" />
+          <stop offset="0%" style={{ stopColor: "var(--background)" }} stopOpacity="1" />
+          <stop offset="60%" style={{ stopColor: "var(--background)" }} stopOpacity="0.6" />
+          <stop offset="100%" style={{ stopColor: "var(--background)" }} stopOpacity="0" />
         </linearGradient>
         <mask id={maskId}>
           <rect width="100%" height="100%" fill={`url(#${gradientId})`} />

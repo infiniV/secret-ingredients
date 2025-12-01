@@ -29,7 +29,8 @@ export function SkillCard({
       className={cn(
         "group relative flex flex-col gap-4 rounded-xl border border-border bg-card p-6",
         "transition-all duration-300 hover:border-primary/20 hover:shadow-lg",
-        "hover:-translate-y-1"
+        "hover:-translate-y-1",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       )}
     >
       {/* Decorative gradient orb */}
@@ -62,7 +63,7 @@ export function SkillCard({
 
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold text-card-foreground">{name}</h3>
-        <p className="line-clamp-2 text-sm text-muted-foreground">
+        <p className="line-clamp-2 text-base leading-relaxed text-muted-foreground">
           {description}
         </p>
       </div>

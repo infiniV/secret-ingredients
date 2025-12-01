@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 interface Point {
@@ -18,6 +18,13 @@ interface GeometricMeshProps {
   connectionDistance?: number;
 }
 
+function getCanvasColor(variable: string, alpha: number): string {
+  const rgb = getComputedStyle(document.documentElement)
+    .getPropertyValue(variable)
+    .trim();
+  return `rgba(${rgb}, ${alpha})`;
+}
+
 export function GeometricMesh({
   className,
   pointCount = 50,
@@ -26,6 +33,14 @@ export function GeometricMesh({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointsRef = useRef<Point[]>([]);
   const animationRef = useRef<number>(0);
+
+  const getLineColor = useCallback((opacity: number): string => {
+    return getCanvasColor("--chart-1-rgb", opacity);
+  }, []);
+
+  const getPointColor = useCallback((): string => {
+    return getCanvasColor("--chart-2-rgb", 0.3);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -85,7 +100,7 @@ export function GeometricMesh({
         if (point.y < 0 || point.y > rect.height) point.vy *= -1;
       });
 
-      // Draw connections
+      // Draw connections with theme-aware colors
       pointsRef.current.forEach((point, i) => {
         pointsRef.current.slice(i + 1).forEach((other) => {
           const dx = point.x - other.x;
@@ -95,7 +110,7 @@ export function GeometricMesh({
           if (dist < connectionDistance) {
             const opacity = (1 - dist / connectionDistance) * 0.15;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(180, 100, 60, ${opacity})`;
+            ctx.strokeStyle = getLineColor(opacity);
             ctx.lineWidth = 1;
             ctx.moveTo(point.x, point.y);
             ctx.lineTo(other.x, other.y);
@@ -104,10 +119,11 @@ export function GeometricMesh({
         });
       });
 
-      // Draw points
+      // Draw points with theme-aware colors
+      const pointColor = getPointColor();
       pointsRef.current.forEach((point) => {
         ctx.beginPath();
-        ctx.fillStyle = "rgba(140, 100, 180, 0.3)";
+        ctx.fillStyle = pointColor;
         ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
         ctx.fill();
       });
@@ -117,15 +133,26 @@ export function GeometricMesh({
 
     animate();
 
+    // Theme reactivity: colors are read fresh in animate loop
+    const observer = new MutationObserver(() => {
+      // Colors are read fresh in animate loop
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationRef.current);
+      observer.disconnect();
     };
-  }, [pointCount, connectionDistance]);
+  }, [pointCount, connectionDistance, getLineColor, getPointColor]);
 
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className={cn(
         "pointer-events-none absolute inset-0 h-full w-full",
         className
