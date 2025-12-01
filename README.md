@@ -1,44 +1,32 @@
 # Secret Ingredients
 
-A skills portfolio for [Claude Code](https://claude.ai/code) that displays skills in a gallery UI with ZIP download and one-click install command copy.
+Specialized skills for Claude Code focused on UI planning, theming, and code quality.
 
-## Getting Started
+## Installation
 
-First, install dependencies:
-
-```bash
-npm install
-```
-
-Then run the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Installing the Plugin
-
-To install these skills in Claude Code, run:
+Install the full skill collection in Claude Code:
 
 ```
 /plugin install secret-ingredients@secret-ingredients-marketplace
 ```
 
-Or download individual skills as ZIP files from the web interface.
+Or browse individual skills at the web gallery and download as ZIP files.
 
-## Adding Skills
+## Available Skills
 
-Skills are stored in the `/skills` directory. Each skill is a folder containing a `SKILL.md` file with YAML frontmatter.
+### theme-checker
 
-Create a new skill:
+Analyzes codebases for theme consistency, checking CSS variables, color usage, and design token adherence across components. Use when auditing for inconsistent colors, verifying design tokens, or ensuring dark mode compatibility.
+
+## Creating Your Own Skills
+
+Skills live in the `/skills` directory. Each skill is a folder with a `SKILL.md` file.
 
 ```bash
 mkdir skills/my-skill
 ```
 
-Then create `skills/my-skill/SKILL.md`:
+Create `skills/my-skill/SKILL.md`:
 
 ```markdown
 ---
@@ -50,7 +38,7 @@ icon: wand
 
 # My Skill
 
-Detailed documentation for the skill goes here.
+Detailed documentation goes here.
 
 ## When to Use
 
@@ -63,63 +51,43 @@ Describe when Claude should use this skill.
 3. Step three
 ```
 
-The `icon` field accepts any [Lucide icon](https://lucide.dev/icons) name in kebab-case.
+### Frontmatter Fields
 
-## Project Structure
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Display name for the skill |
+| `description` | Yes | Brief description shown in gallery |
+| `category` | No | Grouping category (defaults to "general") |
+| `icon` | No | [Lucide icon](https://lucide.dev/icons) name in kebab-case |
 
-```
-secret-ingredients/
-├── app/
-│   ├── api/download/[slug]/   # ZIP download endpoint
-│   ├── skills/[slug]/         # Skill detail pages
-│   ├── globals.css            # Theme variables (oklch)
-│   ├── layout.tsx             # Root layout with ThemeProvider
-│   └── page.tsx               # Homepage gallery
-├── components/
-│   ├── art/                   # Algorithmic art (FloatingOrbs, WavePattern, etc.)
-│   ├── SkillCard.tsx          # Gallery card component
-│   ├── DownloadButton.tsx     # ZIP download button
-│   ├── CopyCommand.tsx        # Clipboard copy component
-│   └── ThemeToggle.tsx        # Light/dark/system toggle
-├── lib/
-│   └── skills.ts              # Skill parsing with gray-matter
-├── skills/                    # Skill definitions (add your skills here)
-└── .claude-plugin/            # Claude Code plugin configuration
-```
+### Skill Categories
 
-## Theming
+- `code-quality` - Linting, consistency checks, code review
+- `ui` - Interface design and component patterns
+- `theming` - Colors, design tokens, dark mode
+- `general` - Everything else
 
-The project uses a warm color palette with oranges, purples, and creams. Theme variables are defined in `app/globals.css` using the oklch color space. Both light and dark modes are supported.
-
-To customize colors, edit the CSS variables in `:root` and `.dark` selectors.
-
-## Build
+## Running the Gallery
 
 ```bash
-npm run build    # Production build
-npm run start    # Start production server
-npm run lint     # Run ESLint
+npm install
+npm run dev
 ```
 
-## Tech Stack
+Open [http://localhost:3000](http://localhost:3000) to browse skills.
 
-- [Next.js 16](https://nextjs.org) with App Router
-- [React 19](https://react.dev)
-- [Tailwind CSS v4](https://tailwindcss.com)
-- [next-themes](https://github.com/pacocoursey/next-themes) for dark mode
-- [gray-matter](https://github.com/jonschlinkert/gray-matter) for frontmatter parsing
-- [archiver](https://github.com/archiverjs/node-archiver) for ZIP generation
-- [Lucide React](https://lucide.dev) for icons
+## Deployment
 
-## Deploy
+```bash
+npm run build
+npm run start
+```
 
-Deploy to [Vercel](https://vercel.com) for the best experience with Next.js:
+Or deploy to Vercel:
 
 ```bash
 npx vercel
 ```
-
-Or check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for other platforms.
 
 ## License
 
