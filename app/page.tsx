@@ -2,6 +2,7 @@ import { getAllSkills } from "@/lib/skills";
 import { SkillCard } from "@/components/SkillCard";
 import { GridPattern } from "@/components/GridPattern";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { FloatingOrbs, GeometricMesh } from "@/components/art";
 import { Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -15,21 +16,36 @@ export default function HomePage() {
         <ThemeToggle />
       </div>
 
-      <GridPattern className="opacity-50" />
+      {/* Algorithmic Art Background */}
+      <GridPattern variant="dots" className="opacity-70" />
+      <FloatingOrbs orbCount={6} />
+      <GeometricMesh pointCount={40} connectionDistance={120} />
 
-      {/* Decorative background elements */}
+      {/* Decorative gradient orbs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className={cn(
-            "absolute -left-40 -top-40 h-80 w-80 rounded-full",
-            "bg-gradient-to-br from-chart-1/10 to-chart-3/10 blur-3xl"
+            "absolute -left-40 -top-40 h-96 w-96 rounded-full",
+            "bg-gradient-to-br from-chart-1/20 to-chart-3/20 blur-3xl",
+            "animate-pulse"
           )}
+          style={{ animationDuration: "8s" }}
         />
         <div
           className={cn(
-            "absolute -bottom-40 -right-40 h-80 w-80 rounded-full",
-            "bg-gradient-to-br from-chart-2/10 to-chart-4/10 blur-3xl"
+            "absolute -bottom-40 -right-40 h-96 w-96 rounded-full",
+            "bg-gradient-to-br from-chart-2/15 to-chart-4/15 blur-3xl",
+            "animate-pulse"
           )}
+          style={{ animationDuration: "10s" }}
+        />
+        <div
+          className={cn(
+            "absolute left-1/2 top-1/3 h-64 w-64 -translate-x-1/2 rounded-full",
+            "bg-gradient-to-br from-chart-5/10 to-primary/10 blur-3xl",
+            "animate-pulse"
+          )}
+          style={{ animationDuration: "12s" }}
         />
       </div>
 

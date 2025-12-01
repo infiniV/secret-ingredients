@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getSkillBySlug, getSkillSlugs } from "@/lib/skills";
 import { DownloadButton } from "@/components/DownloadButton";
 import { CopyCommand } from "@/components/CopyCommand";
+import { GridPattern } from "@/components/GridPattern";
+import { WavePattern } from "@/components/art";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, FileText } from "lucide-react";
 import * as LucideIcons from "lucide-react";
@@ -32,13 +34,27 @@ export default async function SkillPage({ params }: PageProps) {
 
   return (
     <div className="relative min-h-screen bg-background">
-      {/* Decorative background */}
+      {/* Algorithmic Art Background */}
+      <GridPattern variant="crosses" className="opacity-60" />
+      <WavePattern waveCount={3} speed={0.015} />
+
+      {/* Decorative gradient orbs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           className={cn(
             "absolute -right-40 top-20 h-96 w-96 rounded-full",
-            "bg-gradient-to-br from-chart-1/5 to-chart-2/5 blur-3xl"
+            "bg-gradient-to-br from-chart-1/15 to-chart-2/15 blur-3xl",
+            "animate-pulse"
           )}
+          style={{ animationDuration: "8s" }}
+        />
+        <div
+          className={cn(
+            "absolute -left-20 bottom-40 h-64 w-64 rounded-full",
+            "bg-gradient-to-br from-chart-5/10 to-primary/10 blur-3xl",
+            "animate-pulse"
+          )}
+          style={{ animationDuration: "10s" }}
         />
       </div>
 
