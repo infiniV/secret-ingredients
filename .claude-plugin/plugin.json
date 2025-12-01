@@ -1,0 +1,12 @@
+{
+  "name": "secret-ingredients",
+  "description": "Specialized Claude Code skills for UI, theming, and code quality",
+  "version": "1.0.0",
+  "author": {
+    "name": "Secret Ingredients"
+  },
+  "homepage": "https://github.com/yourusername/secret-ingredients",
+  "repository": "https://github.com/yourusername/secret-ingredients",
+  "license": "MIT",
+  "keywords": ["skills", "ui", "theming", "code-quality"]
+}
