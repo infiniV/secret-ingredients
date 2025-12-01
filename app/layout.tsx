@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Secret Ingredients | Claude Code Skills",
   description: "Specialized skills for Claude Code - UI planning, theming, and code quality",
+  other: {
+    "apple-mobile-web-app-title": "SC",
+  },
 };
 
 export default function RootLayout({
